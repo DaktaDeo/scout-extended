@@ -38,7 +38,7 @@ final class ImportCommand extends Command
     public function handle(Dispatcher $events, SearchableFinder $searchableFinder): void
     {
         foreach ($searchableFinder->fromCommand($this) as $searchable) {
-            $this->call('scout:flush', ['searchable' => $searchable]);
+            // $this->call('scout:flush', ['searchable' => $searchable]);
 
             $events->listen(ModelsImported::class, function ($event) use ($searchable) {
                 $this->resultMessage($event->models, $searchable);
