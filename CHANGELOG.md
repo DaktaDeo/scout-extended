@@ -6,6 +6,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.2](https://github.com/algolia/scout-extended/compare/v2.0.1...v2.0.2) - 2022-02-24
+### Fixed
+- Fixed bug where queued aggregator deletes failed ([#287](https://github.com/algolia/scout-extended/pull/287))
+
+
+## [2.0.1](https://github.com/algolia/scout-extended/compare/v2.0.0...v2.0.1) - 2022-01-31
+### Fixed
+- Fix potential race condition when reimporting large number of records ([#300](https://github.com/algolia/scout-extended/pull/300))
+
+## [2.0.0](https://github.com/algolia/scout-extended/compare/v1.20.0...v2.0.0) - 2022-01-28
+### Added
+- Add support for Laravel 9 ([#296](https://github.com/algolia/scout-extended/pull/296))
+
+### Changed
+- Updated API key dealer in use for CI ([#290](https://github.com/algolia/scout-extended/pull/290))
+- `ObjectIDEncrypter` is no longer final ([#297](https://github.com/algolia/scout-extended/pull/297))
+- Updated CI images in use ([#289](https://github.com/algolia/scout-extended/pull/289))
+
+### Fixed
+- Prevent aggregators from registering multiple observers when using the same models ([#239](https://github.com/algolia/scout-extended/pull/239))
+- **BC breaking**: Fixed bug that always returned zero with `paginate()->total()` ([#281](https://github.com/algolia/scout-extended/pull/281))
+  - `AlgoliaEngine->mapIDs` no longer returns the `objectIDs`, but the model IDs.
+
 ## [1.20.0](https://github.com/algolia/scout-extended/compare/v1.19.0...v1.20.0) - 2021-07-08
 ### Added
 - Add `whereOptional` helper to send optional filters ([#284](https://github.com/algolia/scout-extended/pull/284))

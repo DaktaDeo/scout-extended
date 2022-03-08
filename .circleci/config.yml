@@ -22,7 +22,11 @@ aliases:
 
   - &credentials
     name: Get API Key Dealer client
-    command: wget https://alg.li/algolia-keys && chmod +x algolia-keys
+    command: |
+      if [ "${CIRCLE_PR_REPONAME}" ]
+      then
+        curl -s https://algoliasearch-client-keygen.herokuapp.com | bash >> "$BASH_ENV"
+      fi
 
   - &test
     name: Run tests
@@ -47,7 +51,7 @@ executors:
         description: "PHP version tag"
         type: string
     docker:
-        - image: circleci/php:<<parameters.version>>
+        - image: cimg/php:<<parameters.version>>
 
 jobs:
   test:
@@ -66,8 +70,9 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt update
-      - run: sudo docker-php-ext-install zip
+      - run: sudo add-apt-repository ppa:ondrej/php
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y php<<parameters.version>>-zip php<<parameters.version>>-sqlite3
       - restore_cache: *restore_cache
       - run: *install_dependencies
       - save_cache: *save_cache
@@ -80,5 +85,10 @@ workflows:
       - test:
           matrix:
             parameters:
-              version: ['7.3', '7.4', '8.0']
-              laravel: ['^6.0', '^7.0', '^8.0']
+              version: ['7.3', '7.4', '8.0', '8.1']
+              laravel: ['^8.0']
+      - test:
+          matrix:
+            parameters:
+              version: ['8.0', '8.1']
+              laravel: ['^9.0']
